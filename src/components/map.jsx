@@ -1,13 +1,15 @@
+import {SpaceX} from "../api/spacex";
+import {ListofLaunchpads} from "./launchpads";
 import * as d3 from "d3";
 import * as Geo from "../geo.json";
 import {useRef, useEffect} from "react";
 
 function Map(props){
-    const width = 1000;
-    const height = 600;
+    const width = 1140;
+    const height = 680;
     const margin = {
         top: 20,
-        right: 20,
+        right: 10,
         bottom: 20,
         left: 100
     };
@@ -20,7 +22,7 @@ function Map(props){
             .attr("transform", `translate(${margin.left},${margin.top})`)
 
         const projection = d3.geoMercator()
-            .scale(70)
+            .scale(140)
             .center([0, 20])
             .translate([width/2 - margin.left, height/2 - margin.top]);
         const g = svg.append("g");
@@ -37,9 +39,28 @@ function Map(props){
             .on('zoom', function(event) {
                 g.selectAll('path')
                     .attr('transform', event.transform);
+                g.selectAll('circle')
+                    .attr('transform', event.transform);
             });
+            
+            const spaceX = new SpaceX();
+            spaceX.launchpads().then(datapads=>{
+                data = ListofLaunchpads(datapads);
+                g.selectAll("circle")
+                    .data(data).enter()
+                    .append("circle")
+                    .attr("cx", function (d) { console.log(projection(d), d); return projection(d)[0]; })
+                    .attr("cy", function (d) { return projection(d)[1]; })
+                    .attr("real_cx", function(d) {return d[0]})
+                    .attr("real_cy", function(d) {return d[1]})
+                    .attr("r", "5px")
+                    .attr("fill", "black")
+                });
 
         svg.call(zoom); }, []);
+        
+
+        
 
 
 

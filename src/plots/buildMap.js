@@ -18,7 +18,7 @@ function BuildMap(){
         .append("g")
         .attr("transform", `translate(${margin.left},${margin.top})`)
     const projection = d3.geoMercator()
-        .scale(70)
+        .scale(140)
         .center([0, 20])
         .translate([width/2 - margin.left, height/2 - margin.top]);
     svg.append("g")

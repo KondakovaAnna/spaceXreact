@@ -11,11 +11,13 @@ function App(){
         spacex.launches().then(data =>{
             setLaunches(data)
         })
-    },[])
-
+    },[]);
+    
+    let onOn = (id) => console.log("entering" +  id);
+    let onOff = (id) => console.log("leaving" +  id);
     return(
         <main className='main'>
-            <LaunchList launches = {launches}/>
+            <LaunchList launches = {launches} onHoverOn = {onOn} onHoverOff = {onOff} />
             <Map/>
         </main>
     )
