@@ -1,5 +1,4 @@
 function LaunchList(props) {
-console.log(props);
     return (
         <aside className="aside" id="launchesContainer">
             <h3>Launches</h3>
@@ -11,11 +10,11 @@ console.log(props);
                         return <li key={launch.id}
                         onMouseEnter={(event) => {
                             event.target.style.color = "red";
-                            props.onHoverOn(launch.id);
+                            props.onHoverOn(launch.launchpad);
                         }}
                         onMouseLeave={(event) => {
                             event.target.style.color = "black";
-                            props.onHoverOff(launch.id);
+                            props.onHoverOff(launch.launchpad);
                         }}>
                             {launch.name}
                         </li>
